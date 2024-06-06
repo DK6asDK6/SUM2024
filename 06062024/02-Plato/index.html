@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta name="google" content="notranslate" />
+    <meta charset="utf-8" />
+    <link rel="shortcut icon" href="M.BMP" />
+    <title>CGSG: DK6 Summer practice 2024</title>
+    <script src="./main.js"></script>
+  </head>
+  <body>
+    <canvas
+      id="myCan"
+      width="500px"
+      height="500px"
+      style="border: 2px solid red"
+    ></canvas>
+    <script type="module">
+      import * as vigl from "./main.js";
+
+      window.addEventListener("load", () => {
+        vigl.initGL();
+        const draw = () => {
+          // drawing
+          vigl.render();
+
+          // animation register
+          window.requestAnimationFrame(draw);
+        };
+        draw();
+      });
+    </script>
+  </body>
+</html>
