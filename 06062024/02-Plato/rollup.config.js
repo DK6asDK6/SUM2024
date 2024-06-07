@@ -1,10 +1,11 @@
 import terser from "@rollup/plugin-terser";
 
-module.exports = {
+export default {
   input: "main.js",
   output: {
     dir: "output",
-    format: "cjs",
+    format: "iife",
+    sourcemap: "inline",
   },
   plugins: [terser()],
 };

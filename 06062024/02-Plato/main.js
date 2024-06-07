@@ -1,14 +1,37 @@
+import * as mth from "./mth/mth_def";
+
 let canvas,
   gl,
   timeLoc,
   mousePos = { x: 0, y: 0, scale: 1 },
-  mouseLoc;
+  mouseLoc,
+  cam;
+
+function main() {
+  initGL();
+  window.dk6_wh = [canvas.width, canvas.height];
+
+  const draw = () => {
+    render();
+
+    window.requestAnimationFrame(draw);
+  };
+
+  cam = mth.camera();
+  cam.setPos(mth.vec3(5), mth.vec3(), mth.vec3(0, 1, 0));
+  cam.setProj(0.1, 0.1, 100000);
+  cam.setFrameSize(window.dk6_wh[0], window.dk6_wh[1]);
+
+  draw();
+}
 
 // OpenGL initialization function
-export function initGL() {
+function initGL() {
   canvas = document.getElementById("myCan");
   gl = canvas.getContext("webgl2");
   gl.clearColor(0.3, 0.47, 0.8, 1);
+
+  window.dk6_wh = [canvas.width, canvas.height];
 
   // Shader creation
   let vs_txt = `#version 300 es
@@ -109,10 +132,8 @@ function loadShader(shaderType, shaderSource) {
   return shader;
 } // End of 'loadShader' function
 
-let x = 1;
-
 // Main render frame function
-export function render() {
+function render() {
   // console.log(`Frame ${x++}`);
   gl.clear(gl.COLOR_BUFFER_BIT);
 
@@ -143,5 +164,9 @@ export function mouseScroll(mouseX, mouseY, tick) {
   mousePos.y = 2 * mouseY - 1;
   mousePos.scale += tick;
 }
+
+window.addEventListener("load", () => {
+  main();
+});
 
 console.log("CGSG forever!!! mylib.js imported");
