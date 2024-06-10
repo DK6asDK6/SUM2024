@@ -1,5 +1,5 @@
 function D2R(radian) {
-  return (radian * 180) / Math.PI;
+  return (radian * Math.PI) / 180;
 }
 
 /**
@@ -175,7 +175,7 @@ class _mat4 {
       this.m[3][2] * m.m[2][3] +
       this.m[3][3] * m.m[3][3];
 
-    return r;
+    return mat4(r);
   } // End of 'mul' fucntion.
 
   mul3(m1, m2) {

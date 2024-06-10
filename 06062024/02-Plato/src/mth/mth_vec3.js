@@ -2,8 +2,8 @@ class _vec3 {
   constructor(x, y, z) {
     if (x == undefined) return vec3(0, 0, 0);
     else if (typeof x == "object")
-      if (length(x) == 3) (this.x = x[0]), (this.y = x[1]), (this.z = x[2]);
-      else (this.x = x), (this.y = y), (this.z = z);
+      if (x.length == 3) (this.x = x[0]), (this.y = x[1]), (this.z = x[2]);
+      else (this.x = x.x), (this.y = x.y), (this.z = x.z);
     else if (y == undefined || z == undefined)
       (this.x = x), (this.y = x), (this.z = x);
     else (this.x = x), (this.y = y), (this.z = z);

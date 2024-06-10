@@ -1,119 +1,121 @@
+import uniformBlock from "../buf";
+
 class _shader {
-  async _init(name) {
+  constructor(rnd, name) {
+    this.rnd = rnd;
     this.name = name;
-    this.id = null;
+    this.prg = null;
+    this.attrs = [];
+    this.uniforms = [];
+
+    this._init(name);
+  }
+
+  async _init(name) {
     this.shaders = [
       {
         id: null,
-        type: window.gl.VERTEX_SHADER,
+        type: this.rnd.gl.VERTEX_SHADER,
         name: "vert",
         src: "",
       },
       {
         id: null,
-        type: window.gl.FRAGMENT_SHADER,
+        type: this.rnd.gl.FRAGMENT_SHADER,
         name: "frag",
         src: "",
       },
     ];
+
     for (const s of this.shaders) {
-      let response = await fetch(`bin/shaders/${name}/${s.name}.glsl`); //await
-      let src = await response.text(); // await
+      let response = await fetch(`bin/shaders/${name}/${s.name}.glsl`);
+      let src = await response.text();
       if (typeof src == "string" && src != "") s.src = src;
     }
-    // recompile shaders
+
     this.updateShadersSource();
   }
 
   updateShadersSource() {
     this.shaders[0].id = null;
     this.shaders[1].id = null;
-    this.id = null;
+    this.prg = null;
     if (this.shaders[0].src == "" || this.shaders[1].src == "") return;
     this.shaders.forEach((s) => {
-      s.id = gl.createShader(s.type);
-      gl.shaderSource(s.id, s.src);
-      gl.compileShader(s.id);
-      if (!gl.getShaderParameter(s.id, gl.COMPILE_STATUS)) {
-        let buf = gl.getShaderInfoLog(s.id);
+      s.id = this.rnd.gl.createShader(s.type);
+      this.rnd.gl.shaderSource(s.id, s.src);
+      this.rnd.gl.compileShader(s.id);
+      if (!this.rnd.gl.getShaderParameter(s.id, this.rnd.gl.COMPILE_STATUS)) {
+        let buf = this.rnd.gl.getShaderInfoLog(s.id);
         console.log(`Shader ${this.name}/${s.name} compile fail: ${buf}`);
       }
     });
-    this.id = gl.createProgram();
+    this.prg = this.rnd.gl.createProgram();
     this.shaders.forEach((s) => {
-      if (s.id != null) gl.attachShader(this.id, s.id);
+      if (s.id != null) this.rnd.gl.attachShader(this.prg, s.id);
     });
-    gl.linkProgram(this.id);
-    if (!gl.getProgramParameter(this.id, gl.LINK_STATUS)) {
-      let buf = gl.getProgramInfoLog(this.id);
+    this.rnd.gl.linkProgram(this.prg);
+    if (!this.rnd.gl.getProgramParameter(this.prg, this.rnd.gl.LINK_STATUS)) {
+      let buf = this.rnd.gl.getProgramInfoLog(this.prg);
       console.log(`Shader program ${this.name} link fail: ${buf}`);
     }
     this.updateShaderData();
   }
 
   updateShaderData() {
-    // Shader attributes
-    this.attrs = {};
-    const countAttrs = gl.getProgramParameter(this.id, gl.ACTIVE_ATTRIBUTES);
-    for (let i = 0; i < countAttrs; i++) {
-      const info = gl.getActiveAttrib(this.id, i);
-      this.attrs[info.name] = {
-        name: info.name,
-        type: info.type,
-        size: info.size,
-        loc: gl.getAttribLocation(this.id, info.name),
-      };
-    }
-
-    // Shader uniforms
+    // Uniform data
     this.uniforms = {};
-    const countUniforms = gl.getProgramParameter(this.id, gl.ACTIVE_UNIFORMS);
+    const countUniforms = this.rnd.gl.getProgramParameter(
+      this.prg,
+      this.rnd.gl.ACTIVE_UNIFORMS
+    );
     for (let i = 0; i < countUniforms; i++) {
-      const info = gl.getActiveUniform(this.id, i);
+      const info = this.rnd.gl.getActiveUniform(this.prg, i);
       this.uniforms[info.name] = {
         name: info.name,
         type: info.type,
         size: info.size,
-        loc: gl.getUniformLocation(this.id, info.name),
+        loc: this.rnd.gl.getUniformLocation(this.prg, info.name),
       };
     }
 
-    // Shader uniform blocks
+    // Attributes
+    this.attrs = {};
+    const countAttrs = this.rnd.gl.getProgramParameter(
+      this.prg,
+      this.rnd.gl.ACTIVE_ATTRIBUTES
+    );
+    for (let i = 0; i < countAttrs; i++) {
+      const info = this.rnd.gl.getActiveAttrib(this.prg, i);
+      this.attrs[info.name] = {
+        name: info.name,
+        type: info.type,
+        size: info.size,
+        loc: this.rnd.gl.getAttribLocation(this.prg, info.name),
+      };
+    }
+    // Uniform blocks
     this.uniformBlocks = {};
-    const countUniformBlocks = gl.getProgramParameter(
-      this.id,
-      gl.ACTIVE_UNIFORM_BLOCKS
+    const countUniformBlocks = this.rnd.gl.getProgramParameter(
+      this.prg,
+      this.rnd.gl.ACTIVE_UNIFORM_BLOCKS
     );
     for (let i = 0; i < countUniformBlocks; i++) {
-      const block_name = gl.getActiveUniformBlockName(this.id, i);
-      const index = gl.getActiveUniformBlockIndex(this.id, block_name);
-      this.uniformBlocks[block_name] = {
-        name: block_name,
-        index: index,
-        size: gl.getActiveUniformBlockParameter(
-          this.id,
-          index,
-          gl.UNIFORM_BLOCK_DATA_SIZE
-        ),
-        bind: gl.getActiveUniformBlockParameter(
-          this.id,
-          index,
-          gl.UNIFORM_BLOCK_BINDING
-        ),
-      };
+      const block_name = this.rnd.gl.getActiveUniformBlockName(this.prg, i);
+      this.uniformBlocks[block_name] = uniformBlock(this, block_name);
     }
-  }
-
-  constructor(name) {
-    this._init(name);
   }
 
   apply() {
-    if (this.id != null) gl.useProgram(this.id);
+    if (this.prg != null) {
+      this.rnd.gl.useProgram(this.prg);
+      return true;
+    }
+    return false;
   }
 }
 
-function shader(name) {
-  return new _shader(name);
+function shader(shd, name) {
+  return new _shader(shd, name);
 }
 export default shader;

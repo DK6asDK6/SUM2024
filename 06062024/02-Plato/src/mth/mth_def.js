@@ -28,8 +28,9 @@ export {
 };
 
 export function R2D(degree) {
-  return (degree * Math.PI) / 180;
+  return (degree * 180) / Math.PI;
 }
+
 export function D2R(radian) {
-  return (radian * 180) / Math.PI;
+  return (radian * Math.PI) / 180;
 }
