@@ -1,4 +1,4 @@
-import mat4, { mat4Frustum } from "../../mth/mth_mat4";
+import mat4 from "../../mth/mth_mat4";
 import vec3 from "../../mth/mth_vec3";
 
 class _vertex {

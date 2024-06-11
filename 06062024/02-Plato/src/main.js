@@ -1,52 +1,77 @@
-import { mat4Rotate, mat4Translate } from "./mth/mth_mat4";
-import vec3 from "./mth/mth_vec3";
-import { countNormals, primitive, vertex } from "./rnd/prim/prim";
-import render from "./rnd/rnd";
 import { timer } from "./timer/timer";
+import shader from "./rnd/shd/shd";
+import { vec3, mat4 } from "./mth/mth_def";
+import render from "./rnd/rnd";
+import figure from "./Plato/plato";
 
-let rnd, prim, workTime;
+let rnd, prim, workTime, shd, fig;
 
 const draw = () => {
+  workTime.responce();
+
   rnd.render();
-  prim.world = mat4Rotate(Math.sin(workTime.localTime), vec3(1, 1, 3)).mul(
-    mat4Translate(vec3(0, Math.cos(workTime.localTime * 2), 0))
-  );
+
+  const date = new Date();
+  let t =
+    date.getMinutes() * 60 + date.getSeconds() + date.getMilliseconds() / 1000;
+
+  prim.world = mat4
+    .rotate(60 * t, vec3(1, 3, 2))
+    .mul(mat4.translate(vec3(0, Math.sin(t * 4), 0)));
+
+  shd.apply();
+
   prim.draw(rnd);
-  rnd.render();
+
   window.requestAnimationFrame(draw);
 };
 
 function main() {
-  rnd = render(document.getElementById("myCan"));
+  rnd = render(document.getElementById("Figure"));
 
   workTime = new timer();
-  workTime.responce("myCan:fps");
+  workTime.responce();
 
-  let verts = [
-    vertex(vec3(-1)),
-    vertex(vec3(-1, 1, -1)),
-    vertex(vec3(1, 1, -1)),
-    vertex(vec3(1, -1, -1)),
-    vertex(vec3(-1, -1, 1)),
-    vertex(vec3(-1, 1, 1)),
-    vertex(vec3(1, 1, 1)),
-    vertex(vec3(1, -1, 1)),
-  ];
+  fig = figure();
+  fig.setTetra();
 
-  let inds = [
-    0, 1, 2, 0, 2, 3, 4, 5, 6, 4, 6, 7, 0, 1, 4, 1, 4, 5, 2, 6, 7, 2, 7, 3, 1,
-    5, 6, 1, 6, 2, 0, 4, 7, 0, 7, 3,
-  ];
+  shd = shader(rnd, "default");
 
-  countNormals(verts, inds);
+  prim = fig.makePrim(shd);
 
-  prim = primitive(rnd, verts, inds);
+  let arr = ["cube", "tetra", "octa", "dode", "ico"];
+  for (let name of arr) {
+    let element = document.getElementById(name);
+    element.addEventListener("change", () => radioChange(element));
+  }
 
   draw();
+}
+
+export function radioChange(button) {
+  switch (button.value) {
+    case "cube":
+      fig.setCube();
+      prim = fig.makePrim(shd);
+      break;
+    case "tetra":
+      fig.setTetra();
+      prim = fig.makePrim(shd);
+      break;
+    case "octa":
+      fig.setOcta();
+      prim = fig.makePrim(shd);
+      break;
+    case "dode":
+      fig.setDode();
+      prim = fig.makePrim(shd);
+      break;
+    case "ico":
+      fig.setIco();
+      prim = fig.makePrim(shd);
+  }
 }
 
 window.addEventListener("load", () => {
   main();
 });
-
-console.log("CGSG forever!!! mylib.js imported");

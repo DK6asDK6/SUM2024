@@ -420,192 +420,6 @@ class _mat4 {
 } // End of '_mat4' class.
 
 /**
- * Matrix set to rotate by arbitraty vector function.
- * @param {*float} angle in degrees.
- * @param {*vec3} vextor varbitrary.
- * @returns {*mat4} result matrix.
- */
-export function mat4Rotate(angle, vector) {
-  let a = D2R(angle),
-    si = Math.sin(a),
-    co = Math.cos(a);
-
-  let v = vector.normalize();
-
-  return mat4([
-    [
-      co + v.x * v.x * (1 - co),
-      v.y * v.x * (1 - co) - v.z * si,
-      v.z * v.x * (1 - co) + v.y * si,
-      0,
-    ],
-    [
-      v.x * v.y * (1 - co) + v.z * si,
-      co + v.y * v.y * (1 - co),
-      v.z * v.y * (1 - co) - v.x * si,
-      0,
-    ],
-    [
-      v.x * v.z * (1 - co) - v.y * si,
-      v.y * v.z * (1 - co) + v.x * si,
-      co + v.z * v.z * (1 - co),
-      0,
-    ],
-    [0, 0, 0, 1],
-  ]);
-} // End of 'mat4Rotate' function.
-
-/**
- * Rotate x matrix create function.
- * @param {*float} angle in degrees
- * @returns {*mat4} result matrix.
- */
-export function mat4RotateX(angle) {
-  let a = D2R(angle),
-    si = Math.sin(a),
-    co = Math.cos(a);
-
-  return mat4([
-    [1, 0, 0, 0],
-    [0, co, si, 0],
-    [0, -si, co, 0],
-    [0, 0, 0, 1],
-  ]);
-} // End of 'mat4RotateX' function.
-
-/**
- * Rotate y matrix create function.
- * @param {*float} angle in degree
- * @returns {*mat4} result matrix.
- */
-export function mat4RotateY(angle) {
-  let a = D2R(angle),
-    si = Math.sin(a),
-    co = Math.cos(a);
-
-  return mat4([
-    [co, 0, -si, 0],
-    [0, 1, 0, 0],
-    [si, 0, co, 0],
-    [0, 0, 0, 1],
-  ]);
-} // End of 'mat4RotateY' function.
-
-/**
- * Rotate z matrix create function.
- * @param {float} angle in degrees
- * @returns {*mat4}  result matrix.
- */
-export function mat4RotateZ(angle) {
-  let a = D2R(angle),
-    si = Math.sin(a),
-    co = Math.cos(a);
-
-  return mat4([
-    [co, si, 0, 0],
-    [-si, co, 0, 0],
-    [0, 0, 1, 0],
-    [0, 0, 0, 1],
-  ]);
-} // End of 'mat4RotateZ' function
-
-/**
- * Matrix to vector translate function.
- * @param {*vec3} v translate vector.
- * @returns {*mat4} result vector.
- */
-export function mat4Translate(v) {
-  return mat4([
-    [1, 0, 0, 0],
-    [0, 1, 0, 0],
-    [0, 0, 1, 0],
-    [v.x, v.y, v.z, 1],
-  ]);
-} // End of 'translate' function.
-
-/**
- * Scale matrix creation function.
- * @param {*vec3} v scale vector.
- * @returns {*mat4} result matrix.
- */
-export function mat4Scale(v) {
-  return mat4([
-    [v.x, 0, 0, 0],
-    [0, v.y, 0, 0],
-    [0, 0, v.z, 0],
-    [0, 0, 0, 1],
-  ]);
-} // End of 'mat4Scale function.
-
-/**
- * Matrix look-at viewer function.
- * @param {*vec3} loc viewer position.
- * @param {*vec3} at look-at point.
- * @param {*vec3} up approximate up direction.
- * @returns {*mat4} result matrix.
- */
-export function mat4View(loc, at, up) {
-  let dir = at.sub(loc).normalize(),
-    right = dir.cross(up).normalize(),
-    up_real = right.cross(dir).normalize();
-
-  return mat4([
-    [right.x, up_real.x, -dir.x, 0],
-    [right.y, up_real.y, -dir.y, 0],
-    [right.z, up_real.z, -dir.z, 0],
-    [-loc.dot(right), -loc.dot(up_real), loc.dot(dir), 1],
-  ]);
-} // End of 'mat4View' function.
-
-/**
- * Matrix frustum setup function.
- * @param {*float} left
- * @param {*float} right
- * @param {*float} bottom
- * @param {*float} top
- * @param {*float} near
- * @param {*float} far
- * @returns result matrix.
- */
-export function mat4Frustum(left, right, bottom, top, near, far) {
-  return mat4([
-    [(2 * near) / (right - left), 0, 0, 0],
-    [0, (2 * near) / (top - bottom), 0, 0],
-    [
-      (right + left) / (right - left),
-      (top + bottom) / (top - bottom),
-      -(far + near) / (far - near),
-      -1,
-    ],
-    [0, 0, -(2 * near * far) / (far - near), 0],
-  ]);
-} // End of 'mat4Frustum' function.
-
-/**
- * Matrix ortho setup function.
- * @param {*float} left
- * @param {*float} right
- * @param {*float} bottom
- * @param {*float} top
- * @param {*float} near
- * @param {*float} far
- * @returns {*mat4} result matrix.
- */
-export function mat4Ortho(left, right, bottom, top, near, far) {
-  return mat4([
-    [2 / (right - left), 0, 0, 0],
-    [0, 2 / (top - bottom), 0, 0],
-    [0, 0, -2 / (far - near), 0],
-    [
-      -(right + left) / (right - left),
-      -(top + bottom) / (top - bottom),
-      -(far + near) / (far - near),
-      1,
-    ],
-  ]);
-}
-
-/**
  * Matrix 3x3 determinant count function.
  * @param {*any} A11
  * @param {*any} A12
@@ -637,6 +451,128 @@ function mat3Determ(A11, A12, A13, A21, A22, A23, A31, A32, A33) {
 function mat4(mat) {
   return new _mat4(mat);
 }
+
+mat4.rotate = (angle, vector) => {
+  let a = D2R(angle),
+    si = Math.sin(a),
+    co = Math.cos(a);
+
+  let v = vector.normalize();
+
+  return mat4([
+    [
+      co + v.x * v.x * (1 - co),
+      v.y * v.x * (1 - co) - v.z * si,
+      v.z * v.x * (1 - co) + v.y * si,
+      0,
+    ],
+    [
+      v.x * v.y * (1 - co) + v.z * si,
+      co + v.y * v.y * (1 - co),
+      v.z * v.y * (1 - co) - v.x * si,
+      0,
+    ],
+    [
+      v.x * v.z * (1 - co) - v.y * si,
+      v.y * v.z * (1 - co) + v.x * si,
+      co + v.z * v.z * (1 - co),
+      0,
+    ],
+    [0, 0, 0, 1],
+  ]);
+};
+
+mat4.rotateX = (angle) => {
+  let a = D2R(angle),
+    si = Math.sin(a),
+    co = Math.cos(a);
+
+  return mat4([
+    [1, 0, 0, 0],
+    [0, co, si, 0],
+    [0, -si, co, 0],
+    [0, 0, 0, 1],
+  ]);
+};
+mat4.rotateY = (angle) => {
+  let a = D2R(angle),
+    si = Math.sin(a),
+    co = Math.cos(a);
+
+  return mat4([
+    [co, 0, -si, 0],
+    [0, 1, 0, 0],
+    [si, 0, co, 0],
+    [0, 0, 0, 1],
+  ]);
+};
+mat4.rotateZ = (angle) => {
+  let a = D2R(angle),
+    si = Math.sin(a),
+    co = Math.cos(a);
+
+  return mat4([
+    [co, si, 0, 0],
+    [-si, co, 0, 0],
+    [0, 0, 1, 0],
+    [0, 0, 0, 1],
+  ]);
+};
+
+mat4.translate = (v) => {
+  return mat4([
+    [1, 0, 0, 0],
+    [0, 1, 0, 0],
+    [0, 0, 1, 0],
+    [v.x, v.y, v.z, 1],
+  ]);
+};
+mat4.scale = (v) => {
+  return mat4([
+    [v.x, 0, 0, 0],
+    [0, v.y, 0, 0],
+    [0, 0, v.z, 0],
+    [0, 0, 0, 1],
+  ]);
+};
+mat4.view = (loc, at, up) => {
+  let dir = at.sub(loc).normalize(),
+    right = dir.cross(up).normalize(),
+    up_real = right.cross(dir).normalize();
+
+  return mat4([
+    [right.x, up_real.x, -dir.x, 0],
+    [right.y, up_real.y, -dir.y, 0],
+    [right.z, up_real.z, -dir.z, 0],
+    [-loc.dot(right), -loc.dot(up_real), loc.dot(dir), 1],
+  ]);
+};
+mat4.frustum = (left, right, bottom, top, near, far) => {
+  return mat4([
+    [(2 * near) / (right - left), 0, 0, 0],
+    [0, (2 * near) / (top - bottom), 0, 0],
+    [
+      (right + left) / (right - left),
+      (top + bottom) / (top - bottom),
+      -(far + near) / (far - near),
+      -1,
+    ],
+    [0, 0, -(2 * near * far) / (far - near), 0],
+  ]);
+};
+mat4.ortho = (left, right, bottom, top, near, far) => {
+  return mat4([
+    [2 / (right - left), 0, 0, 0],
+    [0, 2 / (top - bottom), 0, 0],
+    [0, 0, -2 / (far - near), 0],
+    [
+      -(right + left) / (right - left),
+      -(top + bottom) / (top - bottom),
+      -(far + near) / (far - near),
+      1,
+    ],
+  ]);
+};
 
 // test
 export default mat4;

@@ -1,5 +1,5 @@
 import vec3 from "./mth_vec3";
-import mat4, { mat4Frustum, mat4View } from "./mth_mat4";
+import mat4 from "./mth_mat4";
 
 // Camera class.
 class _camera {
@@ -17,7 +17,7 @@ class _camera {
     if (width < height) rx *= width / height;
     else ry *= height / width;
 
-    this.proj = mat4Frustum(
+    this.proj = mat4.frustum(
       -rx / 2,
       rx / 2,
       -ry / 2,
@@ -35,7 +35,7 @@ class _camera {
    * @param {*vec3} up
    */
   setPos(loc, at, up) {
-    this.matView = mat4View(loc, at, up);
+    this.matView = mat4.view(loc, at, up);
     this.right = vec3(
       this.matView.m[0][0],
       this.matView.m[1][0],
