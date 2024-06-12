@@ -1,0 +1,28 @@
+span.name {
+  font-size: 40mm;
+  color: darkmagenta;
+  background-color: gold;
+  text-align: center;
+  margin-bottom: 15cm;
+}
+
+span.msg {
+  font-size: 10mm;
+  word-wrap: break-word;
+  max-width: 100px;
+  background-color: cornsilk;
+  text-align: right;
+  margin-top: 5cm;
+  margin-bottom: 5cm;
+  border: 1mm solid red;
+  padding: 2mm;
+}
+
+textarea {
+  white-space: pre-wrap;
+}
+
+input.dodik {
+  border: 0.5mm solid red;
+  font-size: 15mm;
+}

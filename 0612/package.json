@@ -1,0 +1,12 @@
+{
+  "main": "main.js",
+  "dependencies": {
+    "@rollup/plugin-terser": "^0.4.4",
+    "express": "^4.19.2",
+    "hammer": "^0.0.5",
+    "http-server": "^14.1.1",
+    "rollup": "^4.18.0",
+    "ws": "^8.17.0"
+  },
+  "type": "module"
+}
