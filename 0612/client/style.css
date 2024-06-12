@@ -10,19 +10,38 @@ span.msg {
   font-size: 10mm;
   word-wrap: break-word;
   max-width: 100px;
-  background-color: cornsilk;
+  background-color: #76b4ff;
   text-align: right;
   margin-top: 5cm;
   margin-bottom: 5cm;
+  color: #a62500;
   border: 1mm solid red;
   padding: 2mm;
-}
-
-textarea {
-  white-space: pre-wrap;
 }
 
 input.dodik {
   border: 0.5mm solid red;
   font-size: 15mm;
+  border-radius: 15px;
+}
+
+textarea {
+  min-width: 690px;
+  max-width: 690px;
+  min-height: 50px;
+  border-radius: 15px;
+}
+
+div.messager {
+  border: 2mm solid blue;
+  border-radius: 15px;
+  height: 400px;
+  overflow-y: scroll;
+  background-color: aquamarine;
+}
+
+input.btn {
+  height: 50px;
+  width: 50px;
+  background-color: azure;
 }

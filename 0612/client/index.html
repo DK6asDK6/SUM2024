@@ -11,13 +11,20 @@
   <body>
     <span class="name">DK6Gram</span>
     <input type="text" name="userName" id="userName" class="dodik" />
-    <div id="messager"></div>
-    <textarea name="Message" id="msg"></textarea>
-    <input
-      type="button"
-      value="Send"
-      id="btn"
-      onclick="mainBundled.buttonClick();"
-    />
+    <div id="messager" class="messager"></div>
+    <table>
+      <tr>
+        <td><textarea name="Message" id="msg"></textarea></td>
+        <td>
+          <input
+            type="button"
+            value="Send"
+            id="btn"
+            class="btn"
+            onclick="mainBundled.buttonClick();"
+          />
+        </td>
+      </tr>
+    </table>
   </body>
 </html>
