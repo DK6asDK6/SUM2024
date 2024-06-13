@@ -6,17 +6,35 @@ span.name {
   margin-bottom: 15cm;
 }
 
-span.msg {
+td.msg {
   font-size: 10mm;
   word-wrap: break-word;
-  max-width: 100px;
-  background-color: #76b4ff;
-  text-align: right;
+  max-width: 400px;
+  background-color: #fff16a;
   margin-top: 5cm;
   margin-bottom: 5cm;
-  color: #a62500;
+  color: #7751ad;
   border: 1mm solid red;
   padding: 2mm;
+}
+
+td.ot_msg {
+  font-size: 10mm;
+  word-wrap: break-word;
+  max-width: 400px;
+  background-color: #da85ff;
+  margin-top: 10cm;
+  margin-bottom: 5cm;
+  color: #faff7f;
+  border: 1mm solid greenyellow;
+  padding: 2mm;
+}
+
+#printing {
+  font-size: 5mm;
+  word-wrap: break-word;
+  max-width: 800px;
+  color: #5a5a4b;
 }
 
 input.dodik {
@@ -30,6 +48,7 @@ textarea {
   max-width: 690px;
   min-height: 50px;
   border-radius: 15px;
+  font-size: 5mm;
 }
 
 div.messager {
@@ -37,7 +56,7 @@ div.messager {
   border-radius: 15px;
   height: 400px;
   overflow-y: scroll;
-  background-color: aquamarine;
+  background-color: #7fffd4;
 }
 
 input.btn {

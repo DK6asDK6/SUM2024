@@ -6,15 +6,31 @@
     <link rel="shortcut icon" href="images/sdk-large.png" type="images/png" />
     <title>CGSG: DK6 Summer practice 2024</title>
     <script src="output/index.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
     <span class="name">DK6Gram</span>
-    <input type="text" name="userName" id="userName" class="dodik" />
-    <div id="messager" class="messager"></div>
+    <input
+      type="text"
+      name="userName"
+      id="userName"
+      class="dodik"
+      placeholder="Enter name:"
+    />
+
+    <div class="messager"><table id="messager"></table></div>
+    <p id="printing"></p>
     <table>
       <tr>
-        <td><textarea name="Message" id="msg"></textarea></td>
+        <td>
+          <textarea
+            name="Message"
+            id="msg"
+            placeholder="Enter message:"
+            oninput="mainBundled.textChange();"
+          ></textarea>
+        </td>
         <td>
           <input
             type="button"
