@@ -1,197 +1,142 @@
-function marchParabolas(row, vertices, intersections) {
-  let k = 0;
+const INFINITY = 1000000;
+
+function intersect(x1, y1, x2, y2) {
+  return (y1 + x1 * x1 - (y2 + x2 * x2)) / (2 * x1 - 2 * x2);
+}
+
+function horizontalPass(dists, y, width) {
+  let xs = [],
+    ys = [],
+    ls = 0;
+
+  for (let x = 0; x < width; x++) {
+    let ny = dists[y * width + x];
+
+    if (ny < INFINITY) {
+      xs.push(x);
+      ys.push(ny);
+    }
+  }
+
+  let l = xs.length;
+
+  if (l == 0) return;
+
+  for (let i = 0; i < l - 2; i++) {
+    let s = intersect(xs[i], ys[i], xs[i + 2], ys[i + 2]);
+    let f2s = ys[i + 1] + (s - xs[i + 1]) * (s - xs[i + 1]);
+    let f1s = ys[i] + (s - xs[i]) * (s - xs[i]);
+
+    if (f1s <= f2s) {
+      xs.splice(i + 1, 1);
+      ys.splice(i + 1, 1);
+      l--;
+      i = 0;
+    }
+  }
+
+  for (let i = 0; i < width; i++) dists[i + y * width] = INFINITY;
+  for (let i = 0; i < l - 1; i++) {
+    let s = Math.round(intersect(xs[i], ys[i], xs[i + 1], ys[i + 1]));
+
+    for (let x = Math.max(ls, 0); x < width && x < s; x++) {
+      dists[y * width + x] = ys[i] + (x - xs[i]) * (x - xs[i]);
+    }
+    ls = s;
+  }
+
+  for (let x = ls; x < width; x++) {
+    dists[y * width + x] = ys[l - 1] + (x - xs[l - 1]) * (x - xs[l - 1]);
+  }
+}
+
+function transpose(arr, width, height) {
   let result = [];
-  for (let q = 0; q < row.length; q++) {
-    while (intersections[k + 1].x < q) k++;
-    let dx = q - vertices[k].x;
-    result[q] = dx * dx + vertices[k].y;
-  }
-  return result;
-}
 
-function intersectParabolas(p, q) {
-  return (q.y + q.x * q.x - p.y * p.x * p.x) / (2 * (q.x - p.x));
-}
+  for (let y = 0; y < height; y++) {
+    for (let x = 0; x < width; x++) {
+      let nx = y;
+      let ny = width - 1 - x;
 
-function findHullParabolas(row) {
-  let vertices = [],
-    intersections = [],
-    k = 0;
-
-  vertices[0].x = 0;
-  (intersections[0].x = -Infinity), (intersections[1].x = Infinity);
-
-  for (let i = 1; i < row.length; i++) {
-    let q = { x: i, y: row[i] };
-    let p = vertices[k];
-    let s = intersectParabolas(p, q);
-    while (s.x <= z[k].x) {
-      k--;
-      p = vertices[k];
-      s = intersectParabolas(p, q);
-    }
-    k++;
-    vertices[k] = q;
-    intersections[k].x = s;
-    intersections[k + 1].x = Infinity;
-  }
-  return {
-    verts: vertices,
-    inters: intersections,
-  };
-}
-
-function horisontalPass(row) {
-  let t = findHullParabolas(row);
-  let hull_vertices = t.verts,
-    hulll_intersections = t.inters;
-
-  return marchParabolas(row, hull_vertices, hulll_intersections);
-}
-
-function transpose(array) {
-  let result = [[]];
-
-  for (i in array) for (j in array[i]) result[j][i] = array[i][j];
-
-  return result;
-}
-
-// !!! boolMap is 2lay array
-function computeSdf(boolMap) {
-  let sedt = [[]];
-  for (let i in boolMap) {
-    for (let j in boolMap[i]) {
-      sedt[i][j] = boolMap[i][j] ? 0 : Infinity;
-      console.log(i + " " + j + " " + boolMap[i][j]);
+      result[ny * height + nx] = arr[y * width + x];
     }
   }
 
-  for (let row in sedt) {
-    sedt[row] = horisontalPass(sedt[row]);
-  }
-  sedt = transpose(sedt);
-  for (let row in sedt) {
-    sedt[row] = horisontalPass(sedt[row]);
-  }
-  sedt = transpose(sedt);
-  return sedt;
-}
-
-let canvasOrig,
-  contextOrig,
-  canvasFiltred,
-  contextFiltred,
-  canvasSDF,
-  contextSDF;
-
-function fillArray(array, width, height) {
-  let arr = [],
-    diArr = [];
-  // console.log(array);
-
-  for (let i = 0; i < array.length; i += 4) {
-    arr[i] = array[i] == 0;
-    // console.log(arr[i]);
-  }
-
-  for (let i = 0; i < height - 1; i++) {
-    diArr[i] = arr.slice(i * width, width * (i + 1));
-    // console.log(diArr[i]);
-    // console.log(i);
-  }
-
-  canvasSDF = document.getElementById("sdf");
-  contextSDF = canvasSDF.getContext("2d");
-
-  diArr = computeSdf(diArr);
-
-  // let i, j;
-
-  // let drawAray = contextSDF.getImageData(0, 0, BigInt(width), BigInt(height));
-  // for (i = 0; i < height; i++) {
-  //   for (j = 0; j < width; j++) {
-  //     drawAray.data[4 * (i * width + j)] = arr[i][j];
-  //     drawAray.data[4 * (i * width + j) + 1] = arr[i][j];
-  //     drawAray.data[4 * (i * width + j) + 2] = arr[i][j];
-  //     drawAray.data[4 * (i * width + j) + 3] = 255;
-  //   }
-  // }
-
-  // contextSDF.putImageData(drawAray, 0, 0);
+  return result;
 }
 
 function main() {
-  let fileInput = document.querySelector("#img");
-  fileInput.addEventListener("change", () => {
-    let fileUrl = URL.createObjectURL(fileInput.files[0]);
+  let img = new Image();
+  let contextOrig;
+  let data = [],
+    dists1 = [],
+    dists = [];
 
-    const img = new Image(400, 500);
-    img.src = fileUrl;
+  img.onload = function () {
+    let canvasOrig = document.getElementById("canvas");
+    canvasOrig.width = img.width;
+    canvasOrig.height = img.height;
+    contextOrig = canvasOrig.getContext("2d");
 
-    const img1 = new Image(400, 500);
-    img1.src = fileUrl;
+    let canvasSDF = document.getElementById("result");
+    canvasSDF.width = img.width;
+    canvasSDF.height = img.height;
+    let contextSDF = canvasSDF.getContext("2d");
 
-    img.onload = () => {
-      canvasOrig = document.getElementById("original");
-      contextOrig = canvasOrig.getContext("2d");
+    contextOrig.globalCompositeOperation = "hard-light";
 
-      canvasOrig.width = img.naturalWidth;
-      canvasOrig.height = img.naturalHeight;
-      // (canvasSDF.width = img.width), (canvasSDF.height = img.height);
+    contextOrig.drawImage(img, 0, 0);
 
-      contextOrig.drawImage(img, 0, 0);
-    };
+    let data1 = Array.from(
+      contextOrig.getImageData(0, 0, img.width, img.height).data
+    );
 
-    img1.onload = () => {
-      canvasFiltred = document.getElementById("filtred");
-      contextFiltred = canvasFiltred.getContext("2d");
+    for (let i = 0; i < data1.length; i += 4) {
+      if (data1[i] + data1[i + 1] + data1[i + 2] > 300) data.push(1);
+      else data.push(0);
+    }
 
-      canvasFiltred.width = img1.naturalWidth;
-      canvasFiltred.height = img1.naturalHeight;
-
-      // canvasSDF.width = img1.naturalWidth;
-      // canvasSDF.height = img1.naturalHeight;
-
-      contextFiltred.drawImage(img1, 0, 0);
-      let arr = contextFiltred.getImageData(
-        0,
-        0,
-        canvasFiltred.width,
-        canvasFiltred.height
+    for (let i = 0; i < data.length; i++) {
+      if (data[i] == 1) contextOrig.fillStyle = "rgba(255, 255, 255, 1)";
+      else contextOrig.fillStyle = "rgba(0, 0, 0, 1)";
+      contextOrig.fillRect(
+        Math.floor(i % img.width),
+        Math.floor(i / img.width),
+        1,
+        1
       );
+    }
 
-      for (
-        let i = 0;
-        i < canvasFiltred.width * canvasFiltred.height * 4;
-        i += 4
-      ) {
-        let x = (arr.data[i] + arr.data[i + 1] + arr.data[i + 2]) / 765;
-        arr.data[i] = arr.data[i + 1] = arr.data[i + 2] = x >= 0.35 ? 255 : 0;
-        arr.data[i + 3] = 255;
-      }
+    for (let i = 0; i < data.length; i++)
+      if (data[i] == 1) dists.push(0);
+      else dists.push(INFINITY);
 
-      // for (let i = 0; i < canvasFiltred.height; i++) {
-      //   for (let j = 0; j < canvasFiltred.width; j++) {
-      //     array[i][j] = arr.data[4 * (i * canvasFiltred.width + j)] == 0;
-      //   }
-      // }
+    for (let i = 0; i < img.height; i++) horizontalPass(dists, i, img.width);
 
-      contextFiltred.putImageData(arr, 0, 0);
-      let array = arr.data;
-      fillArray(array, canvasFiltred.width, canvasFiltred.height);
+    dists1 = transpose(dists, img.width, img.height);
 
-      // array = computeSdf(array);
-      // for (let i = 0; i < canvasFiltred.height; i++) {
-      //   for (let j = 0; j < canvasFiltred.width; j++) {
-      //     arr.data[4 * (i * canvasFiltred.width + j)] =
-      //       arr.data[4 * (i * canvasFiltred.width + j) + 1] =
-      //       arr.data[4 * (i * canvasFiltred.width + j) + 2] =
-      //         array[i][j] * 5;
-      //   }
-      // }
-    };
+    for (let i = 0; i < img.width; i++) horizontalPass(dists1, i, img.height);
+
+    dists = transpose(dists1, img.height, img.width);
+
+    for (let i = 0; i < dists.length; i++) {
+      let c = Math.floor(Math.min(Math.sqrt(dists[i]), 255)) * 20;
+
+      contextSDF.fillStyle = `rgba(${c}, ${c}, ${c}, 1)`;
+      contextSDF.fillRect(
+        Math.floor(i % img.width),
+        Math.floor(i / img.width),
+        1,
+        1
+      );
+    }
+  };
+
+  let fileInp = document.getElementById("img");
+  fileInp.addEventListener("change", () => {
+    img.src = URL.createObjectURL(fileInp.files[0]);
+    (data = []), (dists1 = []), (dists = []);
   });
 }
 
-window.addEventListener("load", () => main());
+main();

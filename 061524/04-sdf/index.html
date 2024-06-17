@@ -1,23 +1,15 @@
 <!DOCTYPE html>
-<html>
+<html lang="ru" class="notranslate" translate="no">
   <head>
     <meta name="google" content="notranslate" />
     <meta charset="utf-8" />
     <link rel="shortcut icon" href="M.BMP" />
-    <title>CGSG: DK6 Summer practice 2024</title>
-    <script src="./output/main.js"></script>
+    <script src="./output/main.js" type="module"></script>
   </head>
   <body>
-    <table>
-      <tr>
-        <td><canvas id="original"></canvas></td>
-        <td><canvas id="filtred"></canvas></td>
-      </tr>
-      <tr>
-        <td><canvas id="sdf"></canvas></td>
-      </tr>
-    </table>
-
-    <input type="file" id="img" accept="image/*" />
+    <canvas id="canvas" height="100" width="100"></canvas>
+    <canvas id="result" height="100" width="100"></canvas>
+    <br />
+    <input type="file" name="file" id="img" />
   </body>
 </html>
