@@ -92,12 +92,11 @@ function main() {
     );
 
     for (let i = 0; i < data1.length; i += 4) {
-      if (data1[i] + data1[i + 1] + data1[i + 2] > 300) data.push(1);
-      else data.push(0);
+      data.push(data1[i] + data1[i + 1] + data1[i + 2] <= 300);
     }
 
     for (let i = 0; i < data.length; i++) {
-      if (data[i] == 1) contextOrig.fillStyle = "rgba(255, 255, 255, 1)";
+      if (data[i] == 0) contextOrig.fillStyle = "rgba(255, 255, 255, 1)";
       else contextOrig.fillStyle = "rgba(0, 0, 0, 1)";
       contextOrig.fillRect(
         Math.floor(i % img.width),
@@ -124,8 +123,8 @@ function main() {
 
       contextSDF.fillStyle = `rgba(${c}, ${c}, ${c}, 1)`;
       contextSDF.fillRect(
-        Math.floor(i % img.width),
-        Math.floor(i / img.width),
+        Math.floor((dists.length - 1 - i) % img.width),
+        Math.floor((dists.length - 1 - i) / img.width),
         1,
         1
       );
