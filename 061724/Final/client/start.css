@@ -1,0 +1,25 @@
+* {
+  background-color: #20794e;
+}
+
+#welc {
+  /* color: #f90000; */
+  background-color: #c87900;
+  font-weight: bold;
+}
+
+input.sign {
+  border-color: #ffb240;
+  background-color: #a8004d;
+  color: #b3ed00;
+  width: 324px;
+  height: 200px;
+  font-size: 40px;
+  margin: 10px;
+}
+
+#logo {
+  width: 698px;
+}
+
+/* phi = 1.62 */

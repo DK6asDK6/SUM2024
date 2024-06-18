@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta name="google" content="notranslate" />
+    <meta charset="utf-8" />
+    <link rel="shortcut icon" href="images/Dice.jpg" type="images/jpg" />
+    <title>CGSG: DK6 Summer practice 2024</title>
+    <script src="output/index.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <span class="name">DK6 Dragon's dungeon</span> <br />
+
+    <canvas id="figure" width="500" height="300"></canvas>
+
+    <br />
+
+    <input
+      type="text"
+      name="userName"
+      id="userName"
+      class="dodik"
+      placeholder="Enter name:"
+    />
+
+    <div class="messager"><table id="messager"></table></div>
+    <p id="printing"></p>
+    <table>
+      <tr>
+        <td>
+          <textarea
+            name="Message"
+            id="msg"
+            placeholder="Enter message:"
+            oninput="mainBundled.textChange();"
+          ></textarea>
+        </td>
+        <td>
+          <input
+            type="button"
+            value="Send"
+            id="btn"
+            class="btn"
+            onclick="mainBundled.buttonClick();"
+          />
+        </td>
+        <td><input type="file" id="sendFile" accept="image/*" /></td>
+      </tr>
+    </table>
+  </body>
+</html>

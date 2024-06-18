@@ -1,0 +1,66 @@
+span.name {
+  font-size: 20mm;
+  color: darkmagenta;
+  background-color: gold;
+  text-align: center;
+  margin-bottom: 15cm;
+}
+
+td.msg {
+  font-size: 10mm;
+  word-wrap: break-word;
+  max-width: 400px;
+  background-color: #fff16a;
+  margin-top: 5cm;
+  margin-bottom: 5cm;
+  color: #7751ad;
+  border: 1mm solid red;
+  padding: 2mm;
+}
+
+td.ot_msg {
+  font-size: 10mm;
+  word-wrap: break-word;
+  max-width: 400px;
+  background-color: #da85ff;
+  margin-top: 10cm;
+  margin-bottom: 5cm;
+  color: #faff7f;
+  border: 1mm solid greenyellow;
+  padding: 2mm;
+}
+
+#printing {
+  font-size: 5mm;
+  word-wrap: break-word;
+  max-width: 800px;
+  color: #5a5a4b;
+}
+
+input.dodik {
+  border: 0.5mm solid red;
+  font-size: 15mm;
+  border-radius: 15px;
+}
+
+textarea {
+  min-width: 690px;
+  max-width: 690px;
+  min-height: 50px;
+  border-radius: 15px;
+  font-size: 5mm;
+}
+
+div.messager {
+  border: 2mm solid blue;
+  border-radius: 15px;
+  height: 400px;
+  overflow-y: scroll;
+  background-color: #7fffd4;
+}
+
+input.btn {
+  height: 50px;
+  width: 50px;
+  background-color: azure;
+}
