@@ -1,15 +1,44 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <meta name="google" content="notranslate" />
-    <meta charset="utf-8" />
-    <link rel="shortcut icon" href="../images/Dice.jpg" type="images/jpg" />
-    <title>DK6 Dragon's dungeon</title>
-    <script src="./choose.js"></script>
-    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
-    <!-- <link rel="stylesheet" href="start.css" /> -->
-  </head>
-  <body>
-    Ara ara...
-  </body>
-</html>
+<head>
+  <meta name="google" content="notranslate" />
+  <meta charset="utf-8" />
+  <link rel="shortcut icon" href="../images/Dice.jpg" type="images/jpg" />
+  <title>DK6 Dragon's dungeon</title>
+  <script src="/output/choose.js"></script>
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+  <!-- <link rel="stylesheet" href="start.css" /> -->
+</head>
+<body>
+  <table id="choose">
+    <tr>
+      <td colspan="2">Choose your room or launch new one:</td>
+    </tr>
+    <tr>
+      <td colspan="2">
+        <label for="room">Your rooms:</label>
+        <!-- <input type="text" name="room" /> -->
+        <select name="room" id="rooms" onload="chsBundled.init()">
+          <!-- ... -->
+        </select>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <input
+          type="button"
+          value="New room"
+          class="rms"
+          onclick="chsBundled.onNew()"
+        />
+      </td>
+      <td>
+        <input
+          type="button"
+          class="rms"
+          value="Enter room"
+          onclick="chsBundled.onSubmit()"
+        />
+      </td>
+    </tr>
+  </table>
+</body>

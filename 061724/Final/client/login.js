@@ -1,7 +1,7 @@
-window.addEventListener("load", () => {
+export function onLoad() {
   let user = window.localStorage.getItem("user");
-  if (user) window.location = ""; // to game choose
-});
+  if (user) window.location = "./choosemap"; // to game choose
+}
 
 export function registerClick() {
   // window.localStorage.setItem("register", false);

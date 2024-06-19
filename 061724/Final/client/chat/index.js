@@ -124,6 +124,8 @@ function initCommunication() {
   socket.onmessage = (event) => {
     reactOnMessage(event.data);
   };
+
+  // socket.send(JSON.stringify({ type: "User" }));
 }
 
 window.addEventListener("load", () => {

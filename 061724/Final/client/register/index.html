@@ -12,23 +12,35 @@
   <body>
     <h1 id="step">There's only one step before game!</h1>
 
-    <form action="/register" id="register" method="post">
-      <div class="reg">
-        <label for="login">Login:</label>
-        <input type="text" name="login" id="log" required />
-      </div>
-      <div class="reg">
-        <label for="pass">Password:</label>
-        <input type="password" name="pass" id="pass" required />
-      </div>
-      <div class="subm">
-        <input
-          type="submit"
-          value="Register"
-          id="finish"
-          onclick="registerBundle.onSubmit()"
-        />
-      </div>
-    </form>
+    <div>
+      <form action="/register" id="register" method="post">
+        <div class="reg">
+          <label for="login">Login:</label>
+          <input
+            type="text"
+            name="login"
+            id="log"
+            required
+            onchange="registerBundled.onSubmit()"
+          />
+        </div>
+        <div class="reg">
+          <label for="pass">Password:</label>
+          <input type="password" name="pass" id="pass" required />
+        </div>
+        <div class="subm">
+          <input type="submit" value="Register" id="finish" />
+        </div>
+      </form>
+      <br />
+
+      <label for="remember"> Remember me</label>
+      <input
+        type="checkbox"
+        name="remember"
+        id="rem"
+        onchange="registerBundled.onSubmit()"
+      />
+    </div>
   </body>
 </html>

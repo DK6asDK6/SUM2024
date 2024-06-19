@@ -125,39 +125,8 @@ class _game {
     this.masterName = masterName;
     this.personalName = masterName + ":" + roomName;
     this.users = [];
-    this.viewers = [];
     this.characters = [];
     this.messages = [];
-  }
-
-  appendUser(userName) {
-    if (
-      userName != this.masterName &&
-      !this.users.includes(userName) &&
-      !this.viewers.includes(userName)
-    )
-      this.users.push(userName);
-  }
-
-  appendViewer(userName) {
-    if (
-      userName != this.masterName &&
-      !this.users.includes(userName) &&
-      !this.viewers.includes(userName)
-    )
-      this.viewers.push(userName);
-  }
-
-  appendCharacter(characterName) {
-    if (
-      characterName != this.masterName &&
-      !this.characters.includes(characterName)
-    )
-      this.characters.push(userName);
-  }
-
-  appendMessage(message) {
-    this.messages.push(message);
   }
 }
 
@@ -165,25 +134,56 @@ export function game(roomName, masterName) {
   return new _game(roomName, masterName);
 }
 
+game.appendUser = (userName, room) => {
+  if (userName != room.masterName && !room.users.includes(userName))
+    room.users.push(userName);
+};
+
+game.appendCharacter = (characterName, room) => {
+  if (
+    characterName != room.masterName &&
+    !room.characters.includes(characterName)
+  )
+    room.characters.push(userName);
+};
+
+game.appendMessage = (message, room) => {
+  room.messages.push(message);
+};
+
 class _user {
   constructor(name, password) {
     this.name = name;
     this.password = password;
     this.characters = [];
-    this.activeRooms = [];
-  }
-
-  appendCharacter(characterName) {
-    if (!this.characters.includes(characterName))
-      this.characters.push(characterName);
-  }
-
-  deleteCharacter(characterName) {
-    if (this.characters.includes(characterName))
-      this.characters.splice(this.characters.indexOf(characterName), 1);
+    this.rooms = [];
   }
 }
 
 export function user(name, password) {
   return new _user(name, password);
 }
+
+user.appendCharacter = (characterName, user) => {
+  if (!user.characters.includes(characterName))
+    user.characters.push(characterName);
+};
+
+user.deleteCharacrer = (characterName, user) => {
+  if (user.characters.includes(characterName))
+    user.characters.splice(user.characters.indexOf(characterName), 1);
+};
+
+user.enterRoom = (roomName, user) => {
+  if (!user.rooms.includes(roomName)) user.rooms.push(roomName);
+};
+
+user.exitRoom = (roomName, user) => {
+  if (user.rooms.includes(roomName))
+    user.rooms.splice(user.rooms.indexOf(roomName), 1);
+};
+
+//   exitRoom(roomName) {
+//     if (this.rooms.includes(roomName))
+//       this.rooms.splice(this.rooms.indexOf(roomName), 1);
+//   }

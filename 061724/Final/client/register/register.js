@@ -1,5 +1,8 @@
 export function onSubmit() {
   let user = document.getElementById("log").value;
 
-  window.localStorage.setItem("user", user);
+  let remember = document.getElementById("rem").checked;
+
+  if (remember) window.localStorage.setItem("user", user);
+  else window.sessionStorage.setItem("user", user);
 }

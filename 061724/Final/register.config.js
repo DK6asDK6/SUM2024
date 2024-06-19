@@ -1,12 +1,12 @@
 import terser from "@rollup/plugin-terser";
 
 export default {
-  input: "client/choosemap/choose.js",
+  input: "client/register/register.js",
   output: {
     dir: "client/output",
     format: "iife",
     sourcemap: "inline",
-    name: "chsBundled",
+    name: "registerBundled",
   },
   plugins: [terser()],
 };
