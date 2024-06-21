@@ -1,50 +1,250 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <meta name="google" content="notranslate" />
-    <meta charset="utf-8" />
-    <link rel="shortcut icon" href="../images/Dice.jpg" type="images/jpg" />
-    <title>DK6 Dragon's dungeon</title>
-    <!-- <script src="/output/choose.js"></script> -->
-    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
-    <link rel="stylesheet" href="room.css" />
-  </head>
-  <body>
-    <div class="menu">
-      <ul>
-        <li>
-          <a class="menu-caret" href="#">For players</a>
-          <ul>
-            <li>
-              <a href="https://ttg.club/classes" type="_blank">Classes</a>
-            </li>
-            <li><a href="https://ttg.club/races" type="_blank">Races</a></li>
-            <li><a href="https://ttg.club/feats" type="_blank">Feats</a></li>
-            <li>
-              <a href="https://ttg.club/items/magic" type="_blank"
-                >Magic items
-              </a>
-            </li>
-            <li>
-              <a href="https://ttg.club/weapons" target="_blank">Weapons</a>
-            </li>
-            <li>
-              <a href="https://ttg.club/armors" target="_blank">Armors</a>
-            </li>
-            <!-- TODO link to 'my character' -->
-          </ul>
-        </li>
 
-        <li id="master">
-          <a class="menu-caret" href="#">For master</a>
-          <ul>
-            <li>
-              <a href="https://ttg.club/bestiary" type="_blank">Bestiarium</a>
-            </li>
-            <!-- TODO link to all room's characters -->
-          </ul>
-        </li>
-      </ul>
-    </div>
-  </body>
-</html>
+<head>
+  <meta name="google" content="notranslate" />
+  <meta charset="utf-8" />
+  <link rel="shortcut icon" href="../images/Dice.jpg" type="images/jpg" />
+  <title>DK6 Dragon's dungeon</title>
+  <script src="/output/room.js"></script>
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+  <!-- <link rel="stylesheet" href="/room.css" type="text/css" /> -->
+  <!-- 
+  REMEMBER: ot_mes: messages from other,
+            mes: from yourself,
+            mas: from master,
+            to_mas: to master with .m/.master command
+            sys: from system (about throws)
+  -->
+  <style>
+    div.mas {
+      border: solid blue;
+    }
+
+    div.to_mas {
+      border: solid blueviolet;
+    }
+
+    div.mes {
+      border: solid blue;
+    }
+
+    div.ot_mes {
+      border: solid blue;
+    }
+
+    div.sys {
+      border: solid greenyellow;
+    }
+
+    div.messager {
+      overflow-y: scroll;
+    }
+
+    .menu {
+      width: 100%;
+      /* height: 40%; */
+      display: table;
+      margin-bottom: 2%;
+      background-color: lightblue;
+      /* border: 3mm solid lightblue; */
+    }
+
+    .menu ul {
+      display: table-row;
+    }
+
+    .menu li {
+      display: table-cell;
+      position: relative;
+    }
+
+    .menu ul ul {
+      display: none;
+    }
+
+    .menu ul ul li {
+      display: block;
+      padding: 5px 0;
+    }
+
+    .menu-caret::after {
+      display: inline-block;
+      width: 0;
+      height: 0;
+      content: "";
+      margin-left: 0.255em;
+      vertical-align: 0.255em;
+      /* border-top: 3px solid; */
+    }
+
+    .menu li:hover ul {
+      display: block;
+      position: absolute;
+      top: 100%;
+      /* left: 0px; */
+      margin: 0;
+      width: 150px;
+      z-index: 9999;
+      background-color: lightblue;
+    }
+
+    .mainMessager {
+      min-width: 150%;
+    }
+
+    /* 
+    .mainMessager tr td {
+      margin: 50mm;
+    } */
+
+    #msg {
+      min-width: 373px;
+      max-width: 373px;
+    }
+
+    #chars {
+      min-width: 373px;
+      max-width: 373px;
+    }
+
+    #new {
+      min-width: 100px;
+      max-width: 100px;
+    }
+
+    #send {
+      min-width: 100px;
+      max-width: 100px;
+    }
+
+    .messager {
+      height: 300px;
+      border: solid red 1px;
+    }
+
+    /* .menu-caret:after{
+  display: inline-block;
+  width: 0;
+  height: 0;
+
+} */
+
+    #info {
+      display: none;
+    }
+  </style>
+</head>
+<body>
+  <div class="menu">
+    <ul>
+      <li>
+        <a class="menu-caret" href="#">For players</a>
+        <ul>
+          <li>
+            <a
+              href="https://ttg.club/classes"
+              target="_blank"
+              rel="noopener noreferrer"
+              >Classes</a
+            >
+          </li>
+          <li>
+            <a
+              href="https://ttg.club/races"
+              target="_blank"
+              rel="noopener noreferrer"
+              >Races</a
+            >
+          </li>
+          <li>
+            <a
+              href="https://ttg.club/feats"
+              target="_blank"
+              rel="noopener noreferrer"
+              >Feats</a
+            >
+          </li>
+          <li>
+            <a
+              href="https://ttg.club/items/magic"
+              target="_blank"
+              rel="noopener noreferrer"
+              >Magic items
+            </a>
+          </li>
+          <li>
+            <a
+              href="https://ttg.club/weapons"
+              target="_blank"
+              rel="noopener noreferrer"
+              >Weapons</a
+            >
+          </li>
+          <li>
+            <a
+              href="https://ttg.club/armors"
+              target="_blank"
+              rel="noopener noreferrer"
+              >Armors</a
+            >
+          </li>
+          <!-- TODO link to 'my character' -->
+        </ul>
+      </li>
+
+      <li id="master">
+        <a class="menu-caret" href="#">For master</a>
+        <ul>
+          <li>
+            <a
+              href="https://ttg.club/bestiary"
+              target="_blank"
+              rel="noopener noreferrer"
+              >Bestiarium</a
+            >
+          </li>
+          <!-- TODO link to all room's characters -->
+        </ul>
+      </li>
+    </ul>
+  </div>
+
+  <table class="mainMessager">
+    <tr>
+      <td>
+        <div id="charSelector">
+          <label for="chars">Choose character:</label>
+          <!-- <br /> -->
+          <select name="chars" id="chars"></select>
+        </div>
+      </td>
+      <td>
+        <input
+          type="button"
+          value="new..."
+          id="new"
+          onclick="window.open('../character/', '_blank')"
+        />
+        <!-- onclick="window.open('', '_blank')" -->
+      </td>
+      <td rowspan="3"><img src="../images/Dice.jpg" width="40%" /></td>
+    </tr>
+    <tr>
+      <td>
+        <div class="messager">
+          <table id="messager"></table>
+        </div>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <textarea
+          name="Message"
+          id="msg"
+          placeholder="Enter message:"
+        ></textarea>
+      </td>
+      <td><input type="button" value="Send" id="send" class="btn" /></td>
+    </tr>
+  </table>
+</body>

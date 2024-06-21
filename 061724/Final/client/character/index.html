@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<head>
+  <meta name="google" content="notranslate" />
+  <meta charset="utf-8" />
+  <link rel="shortcut icon" href="../images/Dice.jpg" type="images/jpg" />
+  <title>DK6 Dragon's dungeon</title>
+  <script src="/output/character.js"></script>
+  <!-- <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script> -->
+  <style>
+    .list {
+      min-width: 100%;
+    }
+    td {
+      text-align: right;
+    }
+  </style>
+</head>
+<body onload="charBundled.onLoad()">
+  <form class="list" action="/charCreate" method="post">
+    <table>
+      <tr>
+        <td>
+          <label for="STR">Strength (STR)</label>
+          <br />
+          <input
+            required
+            type="text"
+            placeholder="STR"
+            name="STR"
+            class="char"
+          />
+        </td>
+        <td rowspan="3">
+          <label for="sth" class="glob"> Saving throws </label>
+          <table name="sth">
+            <tr>
+              <td>
+                <label for="strsv">Strength</label>
+                <input type="checkbox" name="strsv" id="strsv" class="sv" />
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <label for="dexsv">Dexterity</label>
+                <input type="checkbox" name="dexsv" id="dexsv" class="sv" />
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <label for="consv">Construction</label>
+                <input type="checkbox" name="consv" id="consv" class="sv" />
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <label for="intsv">Intillegence</label>
+                <input type="checkbox" name="intsv" id="intsv" class="sv" />
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <label for="wissv">Wisdom</label>
+                <input type="checkbox" name="wissv" id="wissv" class="sv" />
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <label for="chasv">Charisma</label>
+                <input type="checkbox" name="chasv" id="chasv" class="sv" />
+              </td>
+            </tr>
+          </table>
+        </td>
+        <td>
+          <input
+            required
+            type="text"
+            name="name"
+            id="name"
+            placeholder="Enter name:"
+          />
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <label for="DEX">Dexterity (DEX)</label>
+          <br />
+          <input
+            required
+            type="text"
+            placeholder="DEX"
+            name="DEX"
+            class="char"
+          />
+        </td>
+        <td>
+          <label for="classset"> Class and level </label>
+          <div name="classset">
+            <input required type="text" name="class" placeholder="class" />
+            <input
+              type="number"
+              name="level"
+              placeholder="level"
+              value="1"
+              min="1"
+              max=""
+            />
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <label for="CON">Construction (CON)</label>
+          <br />
+          <input
+            required
+            type="text"
+            placeholder="CON"
+            name="CON"
+            class="char"
+          />
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <label for="INT">Intillegence (INT)</label>
+          <br />
+          <input
+            required
+            type="text"
+            placeholder="INT"
+            name="INT"
+            class="char"
+          />
+        </td>
+        <td rowspan="5">
+          <label for="skls" class="glob">Skills</label>
+          <table name="skls">
+            <tr>
+              <td>
+                <label for="acr">Acrobatics (DEX)</label>
+                <br />
+                <input type="checkbox" name="acr" id="acr" class="sk" />
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <label for="ani">Animal Handling (WIS)</label>
+                <br />
+                <input type="checkbox" name="ani" id="ani" class="sk" />
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <label for="arc">Arcana (INT)</label>
+                <br />
+                <input type="checkbox" name="arc" id="arc" class="sk" />
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <label for="atl">Athletics (STR)</label><br />
+                <input type="checkbox" name="atl" id="atl" class="sk" />
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <label for="dec">Deception (CHA)</label><br />
+                <input type="checkbox" name="dec" id="dec" class="sk" />
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <label for="his">History (INT)</label><br />
+                <input type="checkbox" name="his" id="his" class="sk" />
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <label for="ins"> Insight (WIS) </label><br />
+                <input type="checkbox" name="ins" id="ins" class="sk" />
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <label for="int">Intimidation (CHA)</label><br />
+                <input type="checkbox" name="int" id="int" class="sk" />
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <label for="inv">Investigation (INT)</label><br />
+                <input type="checkbox" name="inv" id="inv" class="sk" />
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <label for="med">Medicine (WIS)</label><br />
+                <input type="checkbox" name="med" id="med" class="sk" />
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <label for="nat">Nature (INT)</label><br />
+                <input type="checkbox" name="nat" id="nat" class="sk" />
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <label for="perc">Perception (WIS)</label><br />
+                <input type="checkbox" name="perc" id="perc" class="sk" />
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <label for="perf">Performance (CHA)</label><br />
+                <input type="checkbox" name="perf" id="perf" class="sk" />
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <label for="pers">Persuasion (CHA)</label><br />
+                <input type="checkbox" name="pers" id="pers" class="sk" />
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <label for="rel">Religion (INT)</label><br />
+                <input type="checkbox" name="atl" id="atl" class="sk" />
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <label for="sle">Sleight of Hand (DEX)</label><br />
+                <input type="checkbox" name="sle" id="sle" class="sk" />
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <label for="ste">Stealth (DEX)</label><br />
+                <input type="checkbox" name="ste" id="ste" class="sk" />
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <label for="sur">Survival (WIS)</label><br />
+                <input type="checkbox" name="sur" id="sur" class="sk" />
+              </td>
+            </tr>
+          </table>
+        </td>
+        <td>
+          <label for="race">Enter race</label><br />
+          <br />
+          <input required type="text" name="race" placeholder="race" />
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <label for="WIS">Wisdom (WIS)</label>
+          <br />
+          <input
+            required
+            type="text"
+            placeholder="WIS"
+            name="WIS"
+            class="char"
+          />
+        </td>
+        <td rowspan="4"><img src="../images/Dice.jpg" width="90%" /></td>
+      </tr>
+      <tr>
+        <td>
+          <label for="CHA">Charisma (CHA)</label>
+          <br />
+          <input
+            required
+            type="text"
+            placeholder="CHA"
+            name="CHA"
+            class="char"
+          />
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <label for="hits">Hit points (HP)</label>
+          <br />
+          <input
+            required
+            type="number"
+            name="hits"
+            id="hits"
+            value="0"
+            placeholder="Character's hits"
+          />
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <label for="ac">Armor class (AC)</label>
+          <br />
+          <input
+            required
+            type="number"
+            name="ac"
+            id="ac"
+            value="10"
+            placeholder="Armor Class (AC)"
+          />
+        </td>
+      </tr>
+    </table>
+
+    <input required type="text" name="info" value="ara" hidden />
+
+    <input type="submit" value="Finish" id="finish" />
+  </form>
+</body>

@@ -1,4 +1,4 @@
-function countPB(level) {
+function countPersBonus(level) {
   return Math.floor((level - 1) / 4) + 2;
 }
 
@@ -12,9 +12,10 @@ class _character {
     name,
     statBlock,
     classes,
+    race,
     abilities,
     hits,
-    AC,
+    ArmorClass,
     equipment
   ) {
     this.name = name;
@@ -29,24 +30,25 @@ class _character {
       CHA: statBlock[5],
     };
     this.mastery = {
-      STR: countMastery(this.STR),
-      DEX: countMastery(this.DEX),
-      CON: countMastery(this.CON),
-      INT: countMastery(this.INT),
-      WIS: countMastery(this.WIS),
-      CHA: countMastery(this.CHA),
+      STR: countMastery(this.stat.STR),
+      DEX: countMastery(this.stat.DEX),
+      CON: countMastery(this.stat.CON),
+      INT: countMastery(this.stat.INT),
+      WIS: countMastery(this.stat.WIS),
+      CHA: countMastery(this.stat.CHA),
     };
 
     this.class = classes; // {clsassname, level}
 
     this.level = 0;
 
-    for (_class of data.classes) this.level += _class.level;
+    for (let _class of this.class) this.level += _class.level;
 
-    this.PB = countPB(this.level);
+    this.PersBonus = countPersBonus(this.level);
 
-    this.race = data.race;
+    this.race = race;
 
+    console.log(abilities);
     this.abilities = {
       STR: {
         saveThrow: abilities.save[0],
@@ -89,34 +91,86 @@ class _character {
     this.bonuses = {
       STR: {
         passive: 10 + this.mastery.STR,
-        athletics: this.mastery.STR + this.PB * this.abilities.STR.athletics,
-        saveThrow: this.mastery.STR + this.PB * this.abilities.STR.saveThrow,
+        athletics:
+          this.mastery.STR + this.PersBonus * this.abilities.STR.athletics,
+        saveThrow:
+          this.mastery.STR + this.PersBonus * this.abilities.STR.saveThrow,
       },
       DEX: {
         passive: 10 + this.mastery.DEX,
-        acrobatics: this.mastery.DEX + this.PB * this.abilities.DEX.acrobatics,
+        acrobatics:
+          this.mastery.DEX + this.PersBonus * this.abilities.DEX.acrobatics,
         sleightOfHand:
-          this.mastery.DEX + this.PB * this.abilities.DEX.sleightOfHand,
-        stealth: this.mastery.DEX + this.PB * this.abilities.DEX.stealth,
-        saveThrow: this.mastery.DEX + this.PB * this.abilities.DEX.saveThrow,
+          this.mastery.DEX + this.PersBonus * this.abilities.DEX.sleightOfHand,
+        stealth: this.mastery.DEX + this.PersBonus * this.abilities.DEX.stealth,
+        saveThrow:
+          this.mastery.DEX + this.PersBonus * this.abilities.DEX.saveThrow,
       },
       CON: {
         passive: 10 + this.mastery.CON,
-        saveThrow: this.mastery.CON + this.PB * this.abilities.CON.saveThrow,
+        saveThrow:
+          this.mastery.CON + this.PersBonus * this.abilities.CON.saveThrow,
       },
       INT: {
         passive: 10 + this.mastery.INT,
+        arcana: this.mastery.INT + this.PersBonus * this.abilities.INT.arcana,
+        history: this.mastery.INT + this.PersBonus * this.abilities.INT.history,
+        investigation:
+          this.mastery.INT + this.PersBonus * this.abilities.INT.investigation,
+        nature: this.mastery.INT + this.PersBonus * this.abilities.INT.nature,
+        religion:
+          this.mastery.INT + this.PersBonus * this.abilities.INT.religion,
+      },
+      WIS: {
+        passive: 10 + this.mastery.WIS,
+        animalHandling:
+          this.mastery.WIS + this.PersBonus * this.abilities.WIS.animalHandling,
+        insight: this.mastery.WIS + this.PersBonus * this.abilities.WIS.insight,
+        medicine:
+          this.mastery.WIS + this.PersBonus * this.abilities.WIS.medicine,
+        perception:
+          this.mastery.WIS + this.PersBonus * this.abilities.WIS.perception,
+        survival:
+          this.mastery.WIS + this.PersBonus * this.abilities.WIS.survival,
+      },
+      CHA: {
+        deception:
+          this.mastery.CHA + this.PersBonus * this.abilities.CHA.deception,
+        intimidation:
+          this.mastery.CHA + this.PersBonus * this.abilities.CHA.intimidation,
+        performance:
+          this.mastery.CHA + this.PersBonus * this.abilities.CHA.performance,
+        persuasion:
+          this.mastery.CHA + this.PersBonus * this.abilities.CHA.persuasion,
       },
     };
 
     this.hits = hits;
-    this.AC = AC;
+    this.ArmorClass = ArmorClass;
     this.equipment = equipment;
   }
 }
 
-export function character(data) {
-  return new _character(data);
+export function character(
+  userName,
+  name,
+  statBlock,
+  classes,
+  abilities,
+  hits,
+  ArmorClass,
+  equipment
+) {
+  return new _character(
+    userName,
+    name,
+    statBlock,
+    classes,
+    abilities,
+    hits,
+    ArmorClass,
+    equipment
+  );
 }
 
 class _game {
@@ -182,6 +236,27 @@ user.exitRoom = (roomName, user) => {
   if (user.rooms.includes(roomName))
     user.rooms.splice(user.rooms.indexOf(roomName), 1);
 };
+
+class _message_structure {
+  constructor(author, char, mes, room, toMaster) {
+    this.author = author;
+    this.char = char;
+    this.mes = mes;
+    this.room = room;
+    this.toMaster = toMaster;
+  }
+}
+
+export function message_structure(
+  author,
+  char,
+  mes,
+  room,
+  toMaster = false,
+  toUser = ""
+) {
+  return new _message_structure(author, char, mes, room, toMaster);
+}
 
 //   exitRoom(roomName) {
 //     if (this.rooms.includes(roomName))

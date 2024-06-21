@@ -1,12 +1,12 @@
 import terser from "@rollup/plugin-terser";
 
 export default {
-  input: "client/room/room.js",
+  input: "client/character/character.js",
   output: {
     dir: "client/output",
     format: "iife",
     sourcemap: "inline",
-    name: "roomBundled",
+    name: "charBundled",
   },
   plugins: [terser()],
 };

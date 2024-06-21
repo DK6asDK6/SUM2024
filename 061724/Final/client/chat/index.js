@@ -56,7 +56,7 @@ function main() {
           );
         });
       }
-    });
+    }); // Jesus helps me...
 }
 
 export function buttonClick() {

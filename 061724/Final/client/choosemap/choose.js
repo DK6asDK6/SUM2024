@@ -1,4 +1,4 @@
-import { game } from "../classes/classes";
+import { game, user } from "../classes/classes";
 
 let socket;
 let responce;
@@ -21,7 +21,7 @@ export function onNew() {
   pressed = true;
 }
 
-export function onSubmit() {
+export async function onSubmit() {
   let existence =
     document.getElementById("new") != undefined ||
     document.getElementById("rooms").options[0] != undefined;
@@ -39,15 +39,35 @@ export function onSubmit() {
       mes = sel.options[sel.selectedIndex].text;
     }
 
-    socket.send(
-      JSON.stringify({
-        type: "roomSubmit",
-        user: name,
-        roomName: mes,
-      })
-    );
+    let message = JSON.stringify({
+      user: name,
+      roomName: mes,
+    });
 
     window.sessionStorage.setItem("room", mes);
+
+    // $.post({
+    //   url: "/toRoom",
+    //   headers: {
+    //     "Content-Type": "application/json;charset=utf-8",
+    //   },
+    //   body: message,
+    //   // body: {
+    //   //   user: name,
+    //   //   roomName: mes,
+    //   // },
+    // });
+
+    await fetch("/toRoom", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json;charset=utf-8",
+      },
+      body: message,
+      // body: { user: name, roomName: mes },
+    }).then(() => {
+      window.location = "/room";
+    });
   }
 }
 
