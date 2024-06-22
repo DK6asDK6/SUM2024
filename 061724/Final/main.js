@@ -23,7 +23,8 @@ app.use(morgan("common"));
 // app.use(express.multipart());
 app.use(bodyParser());
 
-const baseURL = "mongodb://localhost:27017";
+const baseURL =
+  "mongodb+srv://doadmin:x62jNC54Pi1W3t98@db-mongodb-pml30-2024-12312526.mongo.ondigitalocean.com/admin?tls=true&authSource=admin";
 let client = new MongoClient(baseURL),
   userBase,
   roomsBase,
@@ -32,11 +33,11 @@ let client = new MongoClient(baseURL),
 async function launchBase() {
   const connection = await client.connect();
 
-  let database = "DK6Dragon'sDungeon";
+  let database = "PML30-2024-J";
   const db = connection.db(database);
-  userBase = db.collection("Users");
-  roomsBase = db.collection("Games");
-  charsBase = db.collection("Characters");
+  userBase = db.collection("DK6Users");
+  roomsBase = db.collection("DK6Games");
+  charsBase = db.collection("DK6Characters");
 }
 
 app.get("/charReady", async (req, res) => {
@@ -546,8 +547,11 @@ wss.on("connection", (ws) => {
           if (msg.startsWith(".master")) body = msg.substring(8);
           retmsg = message_structure(author, char, body, curRoom, true);
         } else if (msg.startsWith(".u")) {
-          let body = msg.substring(3);
-          // if (msg.startsWith(".user"))
+          let bodyUser = msg.substring(3);
+          if (msg.startsWith(".user")) bodyUser = msg.substring(6);
+          let name = bodyUser.substring(0, bodyUser.indexOf(" "));
+          let body = bodyUser.substring(name.length + 1);
+          retmsg = message_structure(author, char, body, curRoom, false, name);
         }
 
         game.appendMessage(retmsg, roomC);
@@ -569,11 +573,11 @@ wss.on("connection", (ws) => {
   });
 });
 
-const host = "localhost";
+// const host = "localhost";
 const port = 8000;
 
-server.listen(port, host, () => {
-  console.log(`Server started on http://${host}:${port}`);
+server.listen(port, () => {
+  console.log(`Server started on http://:${port}`);
 });
 
 launchBase();

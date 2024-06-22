@@ -1,0 +1,51 @@
+* {
+  background-color: #20794e;
+}
+
+label {
+  background-color: #c77700;
+  font-weight: bold;
+  font-size: 20px;
+  /* display: inline-block; */
+}
+
+#log {
+  background-color: whitesmoke;
+  font-size: 17px;
+  /* text-align: right; */
+}
+
+#pass {
+  background-color: whitesmoke;
+  font-size: 17px;
+}
+
+#step {
+  background-color: #c77700;
+  font-weight: bold;
+  /* font-size: 20px; */
+  text-align: center;
+}
+
+input {
+  height: 40px;
+}
+
+#finish {
+  height: 40px;
+  width: 80px;
+  background-color: wheat;
+  font-size: 15px;
+  font-weight: bold;
+}
+
+div.reg {
+  height: 20px;
+  width: 100px;
+  margin-top: 60px;
+  margin-bottom: 60px;
+}
+
+[type="checkbox"] {
+  vertical-align: middle;
+}

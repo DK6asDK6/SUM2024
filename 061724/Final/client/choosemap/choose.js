@@ -33,7 +33,11 @@ export async function onSubmit() {
   if (existence) {
     let mes = "";
 
-    if (document.getElementById("new") != undefined) mes = $("#new").val();
+    if (
+      document.getElementById("new") != undefined &&
+      $("#new").val().trim() != ""
+    )
+      mes = $("#new").val();
     else {
       let sel = document.getElementById("rooms");
       mes = sel.options[sel.selectedIndex].text;

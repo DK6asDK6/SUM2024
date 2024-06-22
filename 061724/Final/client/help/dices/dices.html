@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<head>
+  <meta name="google" content="notranslate" />
+  <meta charset="utf-8" />
+  <link rel="shortcut icon" href="/client//images/Dice.jpg" type="images/jpg" />
+  <title>DK6 Dragon's dungeon</title>
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+  <link rel="stylesheet" href="dices.css" type="text/css" />
+</head>
+<body>
+  <div class="story">
+    Dark forest, where you were thrown by hand of your God, is always dangerous.
+    Going througth you came across a lonely wolf. His gray fur is stained with
+    blood, but it is ready to fight. Initiative rolls!
+  </div>
+  <div class="question">Wait, rolls? But how?</div>
+
+  <br />
+  <br />
+
+  <div class="info">
+    The answer is easy. DK6Dragon's dungeon supports dice throwing by using
+    ".roll" function.
+    <br />
+    The syntax is easy. Let's take an example:
+    <br />
+    <div id="roll">.roll 1d20:INTI</div>
+    First, we initiate <b>.roll</b> command. Then, we mention count of throws
+    and dice value (in D&D we use d2 (optional), d4, d6, d10, d12 and d20
+    dices). If you want, you can mention characteristics to add to throws using
+    <b>:'characteristics'</b> mark as swown in example. Below you can see a
+    table of characteristics and their abbreviated names to ease throw process:
+  </div>
+  <!-- <br /> -->
+
+  <div class="scroll-table">
+    <table>
+      <thead>
+        <tr>
+          <th>Characteristics</th>
+          <th>Command word</th>
+          <th>Abbreviated command word</th>
+        </tr>
+      </thead>
+    </table>
+
+    <div class="scroll-table-body">
+      <table>
+        <tbody>
+          <tr>
+            <td>Strength</td>
+            <td></td>
+            <td>STR</td>
+          </tr>
+          <tr>
+            <td>Dexterity</td>
+            <td></td>
+            <td>DEX</td>
+          </tr>
+          <tr>
+            <td>Construction</td>
+            <td></td>
+            <td>CON</td>
+          </tr>
+          <tr>
+            <td>Intelligence</td>
+            <td></td>
+            <td>INT</td>
+          </tr>
+          <tr>
+            <td>Wisdom</td>
+            <td></td>
+            <td>WIS</td>
+          </tr>
+          <tr>
+            <td>Charisma</td>
+            <td></td>
+            <td>CHA</td>
+          </tr>
+          <tr>
+            <td>Acrobatics</td>
+            <td>acrobatics</td>
+            <td>ACR</td>
+          </tr>
+          <tr>
+            <td>Animal handling</td>
+            <td>animal</td>
+            <td>ANI</td>
+          </tr>
+          <tr>
+            <td>Arcane</td>
+            <td>arcana</td>
+            <td>ARC</td>
+          </tr>
+          <tr>
+            <td>Athletics</td>
+            <td>athletics</td>
+            <td>ATH</td>
+          </tr>
+          <tr>
+            <td>Deception</td>
+            <td>dexeption</td>
+            <td>DEC</td>
+          </tr>
+          <tr>
+            <td>History</td>
+            <td>history</td>
+            <td>HIS</td>
+          </tr>
+          <tr>
+            <td>Insight</td>
+            <td>insight</td>
+            <td>INS</td>
+          </tr>
+          <tr>
+            <td>Intimidation</td>
+            <td>intimidation</td>
+            <td>INTI</td>
+          </tr>
+          <tr>
+            <td>Investigation</td>
+            <td>investigation</td>
+            <td>INV</td>
+          </tr>
+          <tr>
+            <td>Medicine</td>
+            <td>medicine</td>
+            <td>MED</td>
+          </tr>
+          <tr>
+            <td>Nature</td>
+            <td>nature</td>
+            <td>NAT</td>
+          </tr>
+          <tr>
+            <td>Perception</td>
+            <td>perception</td>
+            <td>perc</td>
+          </tr>
+          <tr>
+            <td>Performance</td>
+            <td>Performance</td>
+            <td>perf</td>
+          </tr>
+          <tr>
+            <td>Persuasion</td>
+            <td>persuasion</td>
+            <td>PERS</td>
+          </tr>
+          <tr>
+            <td>Religion</td>
+            <td>religion</td>
+            <td>REL</td>
+          </tr>
+          <tr>
+            <td>Sleight of hand</td>
+            <td>sleight</td>
+            <td>SLE (or SOH)</td>
+          </tr>
+          <tr>
+            <td>Stealth</td>
+            <td>stealth</td>
+            <td>STE</td>
+          </tr>
+          <tr>
+            <td>Survival</td>
+            <td>survival</td>
+            <td>SUR</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <div class="info">
+    What is also important, you do not really have to type characteristics bonus
+    in uppercase, so your command can look like this:
+    <div id="roll">.roll 3d8:dex</div>
+  </div>
+</body>

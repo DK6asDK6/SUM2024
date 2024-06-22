@@ -9,31 +9,109 @@
   <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
   <!-- <link rel="stylesheet" href="/room.css" type="text/css" /> -->
   <!-- 
-  REMEMBER: ot_mes: messages from other,
-            mes: from yourself,
-            mas: from master,
-            to_mas: to master with .m/.master command
-            sys: from system (about throws)
+  REMEMBER: .ot_mes: messages from other,
+            .mes: from yourself,
+            .to_you: message only you see,
+            .mas: from master,
+            .to_mas: to master with .m/.master command
+            .sys: from system (about throws)
   -->
   <style>
+    * {
+      background-color: #ffdfbd;
+    }
+
+    textarea {
+      background-color: #d2f5e4;
+    }
+
+    #chars {
+      background-color: whitesmoke;
+    }
+
+    #chars option {
+      background-color: whitesmoke;
+    }
+
+    div .mes_user {
+      background-color: #f6c6d0;
+      /* FFDFBD */
+    }
+
+    div .mes_message {
+      background-color: #ffc2bd;
+    }
+
+    div.to_you {
+      border: solid orchid;
+
+      border-top-right-radius: 7px;
+      border-top-left-radius: 7px;
+      border-bottom-left-radius: 7px;
+      margin-bottom: 2px;
+      word-wrap: break-word;
+      max-width: 400px;
+      padding: 1px;
+    }
+
     div.mas {
       border: solid blue;
+
+      border-top-right-radius: 7px;
+      border-top-left-radius: 7px;
+      border-bottom-left-radius: 7px;
+      margin-bottom: 2px;
+      word-wrap: break-word;
+      max-width: 400px;
+      padding: 1px;
     }
 
     div.to_mas {
       border: solid blueviolet;
+
+      border-top-right-radius: 7px;
+      border-top-left-radius: 7px;
+      border-bottom-left-radius: 7px;
+      margin-bottom: 2px;
+      word-wrap: break-word;
+      max-width: 400px;
+      padding: 1px;
     }
 
     div.mes {
       border: solid blue;
+
+      border-top-right-radius: 7px;
+      border-top-left-radius: 7px;
+      border-bottom-left-radius: 7px;
+      margin-bottom: 2px;
+      word-wrap: break-word;
+      max-width: 400px;
+      padding: 1px;
     }
 
     div.ot_mes {
       border: solid blue;
+
+      border-top-right-radius: 7px;
+      border-top-left-radius: 7px;
+      border-bottom-left-radius: 7px;
+      margin-bottom: 2px;
+      word-wrap: break-word;
+      max-width: 400px;
+      padding: 1px;
     }
 
     div.sys {
       border: solid greenyellow;
+
+      border-top-right-radius: 7px;
+      border-top-left-radius: 7px;
+      border-bottom-left-radius: 7px;
+      margin-bottom: 2px;
+      word-wrap: break-word;
+      max-width: 400px;
+      padding: 1px;
     }
 
     div.messager {
@@ -45,26 +123,34 @@
       /* height: 40%; */
       display: table;
       margin-bottom: 2%;
-      background-color: lightblue;
+      background-color: #add8e6;
       /* border: 3mm solid lightblue; */
+    }
+
+    .menu a {
+      background-color: #add8e6;
     }
 
     .menu ul {
       display: table-row;
+      background-color: #add8e6;
     }
 
     .menu li {
       display: table-cell;
       position: relative;
+      background-color: #add8e6;
     }
 
     .menu ul ul {
       display: none;
+      background-color: #add8e6;
     }
 
     .menu ul ul li {
       display: block;
       padding: 5px 0;
+      background-color: #add8e6;
     }
 
     .menu-caret::after {
@@ -75,6 +161,7 @@
       margin-left: 0.255em;
       vertical-align: 0.255em;
       /* border-top: 3px solid; */
+      background-color: #add8e6;
     }
 
     .menu li:hover ul {
@@ -92,10 +179,10 @@
       min-width: 150%;
     }
 
-    /* 
-    .mainMessager tr td {
-      margin: 50mm;
-    } */
+    /*
+        .mainMessager tr td {
+          margin: 50mm;
+        } */
 
     #msg {
       min-width: 373px;
@@ -122,12 +209,16 @@
       border: solid red 1px;
     }
 
-    /* .menu-caret:after{
-  display: inline-block;
-  width: 0;
-  height: 0;
+    [type="button"] {
+      background-color: whitesmoke;
+    }
 
-} */
+    /* .menu-caret:after{
+      display: inline-block;
+      width: 0;
+      height: 0;
+
+    } */
 
     #info {
       display: none;
@@ -206,6 +297,39 @@
           <!-- TODO link to all room's characters -->
         </ul>
       </li>
+
+      <li>
+        <a href="#" class="menu-caret">Account</a>
+        <ul>
+          <li>
+            <a href="../index.html" onclick="roomBundled.logOut()">Log out</a>
+          </li>
+        </ul>
+      </li>
+
+      <li>
+        <a href="#" class="menu-caret">Help with commands</a>
+        <ul>
+          <li>
+            <a
+              href="../help/dices/dices.html"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Dices
+            </a>
+          </li>
+          <li>
+            <a
+              href="../help/dialogWithMaster/dialog.html"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Personal messages
+            </a>
+          </li>
+        </ul>
+      </li>
     </ul>
   </div>
 
@@ -221,7 +345,7 @@
       <td>
         <input
           type="button"
-          value="new..."
+          value="Edit/New..."
           id="new"
           onclick="window.open('../character/', '_blank')"
         />

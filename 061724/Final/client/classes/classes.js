@@ -238,12 +238,13 @@ user.exitRoom = (roomName, user) => {
 };
 
 class _message_structure {
-  constructor(author, char, mes, room, toMaster) {
+  constructor(author, char, mes, room, toMaster, toUser) {
     this.author = author;
     this.char = char;
     this.mes = mes;
     this.room = room;
     this.toMaster = toMaster;
+    this.toUser = toUser;
   }
 }
 
@@ -255,7 +256,7 @@ export function message_structure(
   toMaster = false,
   toUser = ""
 ) {
-  return new _message_structure(author, char, mes, room, toMaster);
+  return new _message_structure(author, char, mes, room, toMaster, toUser);
 }
 
 //   exitRoom(roomName) {

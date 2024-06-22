@@ -16,7 +16,8 @@ function toHTML(message, client, master) {
   if (message.author == "System") _class = "sys";
   else if (message.author == client) _class = "mes";
   else if (message.author == master) _class = "mas";
-  else if (message.toMaster != undefined && message.toMaster) _class = "to_mas";
+  else if (message.toMaster) _class = "to_mas";
+  else if (message.toUser != "") _class = "to_you";
 
   return `
     <div class=${_class}>
@@ -65,13 +66,11 @@ function onBtnClick() {
 
 function reactOnMessage(data) {
   let mes = JSON.parse(data);
-  console.log(mes);
   switch (mes.type) {
     case "characters":
       arr = mes.characters;
       document.getElementById("chars").innerHTML = "";
       for (let character of arr) {
-        console.log(character);
         document.getElementById("chars").innerHTML += `
       <option value=${character}>${character}</option>
       `;
@@ -91,18 +90,24 @@ function reactOnMessage(data) {
       let code = toHTML(mes.message, name, masterName);
 
       if (
-        mes.message.toMaster != undefined &&
         mes.message.toMaster &&
         name != masterName &&
         mes.message.author != name
-      )
-        console.log(
-          "denied " + name + " " + masterName + " " + mes.message.author
-        );
-      else messageArea.insertAdjacentHTML("beforeend", code);
+      ) {
+      } else if (
+        mes.message.toUser != "" &&
+        name != mes.message.toUser &&
+        mes.message.author != name
+      ) {
+      } else messageArea.insertAdjacentHTML("beforeend", code);
 
       break;
   }
+}
+
+export function logOut() {
+  window.localStorage.clear();
+  window.sessionStorage.clear();
 }
 
 function initCommunication() {
@@ -113,8 +118,13 @@ function initCommunication() {
   name = st[0].trim();
   roomGlobalName = st[1];
   st = st[1].split(":");
-  roomName = st[1];
-  masterName = st[0];
+  roomName = st[1].trim().substring(0, st[1].indexOf("\n"));
+  masterName = st[0].trim();
+
+  console.log("name " + name);
+  console.log("room global " + roomGlobalName);
+  console.log("room " + roomName);
+  console.log("master " + masterName);
 
   socket.onopen = () => {
     console.log("open");

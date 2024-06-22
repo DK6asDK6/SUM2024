@@ -7,7 +7,7 @@
     <title>DK6 Dragon's dungeon</title>
     <script src="../output/register.js"></script>
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
-    <!-- <link rel="stylesheet" href="start.css" type="text/css" /> -->
+    <link rel="stylesheet" href="register.css" type="text/css" />
   </head>
   <body>
     <h1 id="step">There's only one step before game!</h1>
@@ -32,15 +32,18 @@
           <input type="submit" value="Register" id="finish" />
         </div>
       </form>
-      <br />
+      <!-- <br /> -->
 
-      <label for="remember"> Remember me</label>
-      <input
-        type="checkbox"
-        name="remember"
-        id="rem"
-        onchange="registerBundled.onSubmit()"
-      />
+      <div>
+        <label for="remember" id="check">
+          Remember me
+          <input
+            type="checkbox"
+            name="remember"
+            id="rem"
+            onchange="registerBundled.onSubmit()"
+        /></label>
+      </div>
     </div>
   </body>
 </html>
